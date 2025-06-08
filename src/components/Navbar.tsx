@@ -6,15 +6,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const languages = [
-    { code: 'uz', flag: '🇺🇿', name: 'O\'zbekcha' },
-    { code: 'ru', flag: '🇷🇺', name: 'Русский' },
-    { code: 'en', flag: '🇬🇧', name: 'English' },
-  ];
 
   return (
     <nav className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700">
@@ -59,30 +53,6 @@ const Navbar: React.FC = () => {
 
           {/* Controls */}
           <div className="flex items-center space-x-4">
-            {/* Language Selector */}
-            <div className="relative group">
-              <button className="flex items-center space-x-1 px-3 py-2 rounded-md bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                <span className="text-lg">{languages.find(l => l.code === language)?.flag}</span>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {language.toUpperCase()}
-                </span>
-              </button>
-              <div className="absolute top-full right-0 mt-2 py-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code as any)}
-                    className="w-full px-4 py-2 text-left flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                  >
-                    <span className="text-lg">{lang.flag}</span>
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {lang.name}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}

@@ -53,7 +53,7 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
               content: message
             }
           ],
-          max_tokens: 1000,
+          max_tokens: 500,
           temperature: 0.7
         })
       });
@@ -251,37 +251,32 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
         </div>
 
         {/* Input Form - Moved to bottom */}
-        <div className="mt-auto">
-          <form onSubmit={handleSubmit}>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-4">
-              <div className="flex items-end space-x-4">
-                <div className="flex-1">
-                  <textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSubmit(e);
-                      }
-                    }}
-                    placeholder={t('typeMessage')}
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all duration-200"
-                    rows={1}
-                    style={{ minHeight: '52px', maxHeight: '120px' }}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={!input.trim() || isLoading}
-                  className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl flex items-center justify-center transition-all duration-200 transform hover:scale-105 disabled:scale-100 shadow-lg hover:shadow-xl"
-                >
-                  <Send className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+<div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-xl px-4 z-50">
+  <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-full shadow-md border border-gray-200 dark:border-gray-700 p-2 flex items-center space-x-2 transition-all">
+    <textarea
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          handleSubmit(e);
+        }
+      }}
+      placeholder={t('typeMessage')}
+      className="flex-1 px-4 py-2 bg-transparent text-sm resize-none focus:outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+      rows={1}
+      style={{ minHeight: '40px', maxHeight: '100px' }}
+    />
+    <button
+      type="submit"
+      disabled={!input.trim() || isLoading}
+      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-white rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-md"
+    >
+      <Send className="w-4 h-4" />
+    </button>
+  </form>
+</div>
+
       </div>
     </div>
   );
