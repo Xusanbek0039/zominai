@@ -76,7 +76,7 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer re_YvhGje9P_DhcvheooVaYAbD4zcb8hX763'
+          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
         },
         body: JSON.stringify({
           from: 'ZominAI <noreply@zominai.uz>',
