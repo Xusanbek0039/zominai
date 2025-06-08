@@ -10,7 +10,7 @@ export const languageData = {
     
     // Hero section
     heroTitle: "ZominAI — Sizning sun'iy intellekt yordamchingiz",
-    heroSubtitle: "O'zbekistondagi eng zamonaviy AI chatbot bilan muloqot qiling",
+    heroSubtitle: "Zomin tumani IT Creative o'quvchilari tomonidan tashkil etilgan AI modul sizning yordamchingiz!",
     getStarted: "Boshlash",
     learnMore: "Batafsil",
     
