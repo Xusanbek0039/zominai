@@ -31,7 +31,7 @@ const Chat: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
   const sendToOpenAI = async (message: string): Promise<string> => {
     try {
