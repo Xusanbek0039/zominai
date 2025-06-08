@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { BookOpen, CheckCircle } from 'lucide-react';
+import emailjs from 'emailjs-com';
 import { useLanguage } from '../contexts/LanguageContext';
-
-const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY; // Vite uchun to'g'ri o'qish usuli
 
 const Forms: React.FC = () => {
   const { t } = useLanguage();
 
-  // Form state
   const [courseForm, setCourseForm] = useState({
     firstName: '',
     lastName: '',
@@ -24,23 +22,14 @@ const Forms: React.FC = () => {
     { value: 'ai', label: t('artificialIntelligence') }
   ];
 
-  // Telefon raqam +998 bilan boshlanishini avtomatik ta'minlash
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
-
-    // Agar +998 bilan boshlanmasa, +998 ni avtomatik qo'shish
     if (!val.startsWith('+998')) {
       val = '+998';
     }
-
-    // +998 dan keyingi qismni faqat raqam bilan cheklash
     const afterCode = val.slice(4).replace(/\D/g, '');
-
-    // Maksimal uzunlikni 9 raqam (masalan +998XXYYYYYYY)
     const limited = afterCode.slice(0, 9);
-
     val = '+998' + limited;
-
     setCourseForm(prev => ({ ...prev, phone: val }));
   };
 
@@ -48,44 +37,32 @@ const Forms: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    // Telefon raqam uzunligini tekshirish (masalan: +998 + 9 raqam = 13 belgidan iborat)
     if (courseForm.phone.length !== 13) {
       setError(t('invalidPhone') || 'Iltimos, to‘liq telefon raqamini kiriting.');
       return;
     }
 
     try {
-      // Resend API ga POST so'rov yuborish
-      const response = await fetch('https://api.resend.com/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${RESEND_API_KEY}`
-        },
-        body: JSON.stringify({
-          from: 'no-reply@yourdomain.com',
-          to: ['support@yourdomain.com'],  // O'zgartiring kerakli emailga
-          subject: `Yangi kursga yozilish: ${courseForm.course}`,
-          text: `
-Ism: ${courseForm.firstName}
-Familiya: ${courseForm.lastName}
-Telefon: ${courseForm.phone}
-Kurs: ${courseForm.course}
-          `
-        })
-      });
+      const templateParams = {
+        from_first_name: courseForm.firstName,
+        from_last_name: courseForm.lastName,
+        phone: courseForm.phone,
+        course: courseForm.course
+      };
 
-      if (!response.ok) {
-        throw new Error('Tarmoq xatosi');
-      }
+      await emailjs.send(
+        'service_q8hblyn',        // Service ID
+        'template_jdgxnou',       // Template ID
+        templateParams,
+        'AsVygMXA9oU4QQ3lc'       // Public key
+      );
 
       setCourseSuccess(true);
       setCourseForm({ firstName: '', lastName: '', phone: '+998', course: '' });
-
       setTimeout(() => setCourseSuccess(false), 3000);
     } catch (err) {
-      setError(t('submissionError') || 'Xatolik yuz berdi, qayta urinib ko‘ring.');
       console.error(err);
+      setError(t('submissionError') || 'Xatolik yuz berdi, qayta urinib ko‘ring.');
     }
   };
 
