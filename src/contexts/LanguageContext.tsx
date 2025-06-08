@@ -9,7 +9,7 @@ export const languageData = {
     startChat: "Chatni boshlash",
     
     // Hero section
-    heroTitle: "ZominAI — Sizning sun'iy intellekt yordamchingiz",
+    heroTitle: "ZominAI — Aqlli yordamchi: tezkor, ishonchli, siz uchun ",
     heroSubtitle: "Zomin tumani IT Creative o'quvchilari tomonidan tashkil etilgan AI modul sizning yordamchingiz!",
     getStarted: "Boshlash",
     learnMore: "Batafsil",
@@ -30,14 +30,14 @@ export const languageData = {
     artificialIntelligence: "Sun'iy intellekt",
     
     // About Developer
-    aboutDeveloper: "Dasturchi haqida",
+    aboutDeveloper: "LOYIHA YARATUVCHISI",
     developerName: "Abdulloh Yusupov",
     developerRole: "Full Stack Developer",
     github: "GitHub",
     telegram: "Telegram",
     
     // Testimonials
-    testimonials: "Mijozlar fikri",
+    testimonials: "LOYIHA HAQIDA FIKRLAR",
     testimonial1: "ZominAI juda foydali! Barcha savollarimga aniq javob beradi.",
     testimonial2: "Eng yaxshi AI yordamchi! Dasturlashda katta yordam beradi.",
     testimonial3: "Juda tez va aniq javoblar. Tavsiya qilaman!",
@@ -47,7 +47,7 @@ export const languageData = {
     testimonial7: "Ma'lumotlar tahlilida ZominAI bilan ishlash juda qulay.",
     
     // Sponsors
-    sponsors: "Homiylar",
+    sponsors: "BIZGA ISHONCH BILDIRISHADI",
     
     // Footer
     contact: "Aloqa",
@@ -56,7 +56,7 @@ export const languageData = {
     allRightsReserved: "Barcha huquqlar himoyalangan",
     
     // Chat
-    chatWelcome: "Salom! Men ZominAIman. Savolingiz bormi?",
+    chatWelcome: "ZominAI bilan Chat boshlandi!",
     typeMessage: "Xabaringizni yozing...",
     send: "Yuborish",
     copyCode: "Nusxa olish",

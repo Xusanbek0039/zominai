@@ -1,8 +1,14 @@
 import React from 'react';
-import { Bot, Sun, Moon, MessageCircle } from 'lucide-react';
+import { Bot, Sun, Moon, MessageCircle, Home as HomeIcon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
+
+interface NavButtonProps {
+  to: string;
+  label: string;
+  icon: React.ReactNode;
+}
 
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -10,12 +16,38 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  /** Reusable rounded gradient button */
+  const NavButton: React.FC<NavButtonProps> = ({ to, label, icon }) => {
+    const isActive = location.pathname === to;
+
+    return (
+      <button
+        onClick={() => navigate(to)}
+        className={`
+          relative inline-flex items-center gap-2 px-5 py-2 rounded-full font-medium
+          transition-all duration-300
+          ${isActive
+            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+            : 'text-gray-700 dark:text-gray-300 bg-gray-100/60 dark:bg-gray-800/60 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white'}
+        `}
+      >
+        {icon}
+        <span>{label}</span>
+
+        {/* Pulsating ring for active state */}
+        {isActive && (
+          <span className="absolute inset-0 rounded-full ring-2 ring-purple-400/60 animate-pulse pointer-events-none"></span>
+        )}
+      </button>
+    );
+  };
+
   return (
     <nav className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div 
+          <div
             className="flex items-center space-x-2 cursor-pointer group"
             onClick={() => navigate('/')}
           >
@@ -28,27 +60,17 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => navigate('/')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                location.pathname === '/' 
-                  ? 'text-purple-600 dark:text-purple-400' 
-                  : 'text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400'
-              }`}
-            >
-              {t('home')}
-            </button>
-            <button
-              onClick={() => navigate('/chat')}
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                location.pathname === '/chat' 
-                  ? 'text-purple-600 dark:text-purple-400' 
-                  : 'text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400'
-              }`}
-            >
-              {t('chat')}
-            </button>
+          <div className="hidden md:flex items-center space-x-4">
+            <NavButton
+              to="/"
+              label={t('home')}
+              icon={<HomeIcon className="w-4 h-4" />}
+            />
+            <NavButton
+              to="/chat"
+              label={t('chat')}
+              icon={<MessageCircle className="w-4 h-4" />}
+            />
           </div>
 
           {/* Controls */}
@@ -65,7 +87,7 @@ const Navbar: React.FC = () => {
               )}
             </button>
 
-            {/* Start Chat Button */}
+            {/* Start Chat CTA */}
             {location.pathname !== '/chat' && (
               <button
                 onClick={() => navigate('/chat')}

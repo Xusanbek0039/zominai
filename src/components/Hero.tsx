@@ -1,11 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 
+// Typewriter multi-text animation component
+const TypewriterMulti: React.FC<{ texts: string[] }> = ({ texts }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    if (textIndex >= texts.length) {
+      // Agar oxirgi matnga yetgan bo'lsa, boshidan qaytadan boshlash
+      const resetTimeout = setTimeout(() => {
+        setTextIndex(0);
+        setDisplayedText('');
+        setCharIndex(0);
+      }, 1500);
+      return () => clearTimeout(resetTimeout);
+    }
+
+    if (charIndex < texts[textIndex].length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + texts[textIndex][charIndex]);
+        setCharIndex(charIndex + 1);
+      }, 100);
+      return () => clearTimeout(timeout);
+    } else {
+      // Matn tugagach, keyingi matnga o'tish uchun kichik pauza
+      const pauseTimeout = setTimeout(() => {
+        setDisplayedText('');
+        setCharIndex(0);
+        setTextIndex(textIndex + 1);
+      }, 1200);
+      return () => clearTimeout(pauseTimeout);
+    }
+  }, [charIndex, textIndex, texts]);
+
+  return (
+    <span className="text-3xl md:text-5xl font-medium text-gray-700 dark:text-gray-300">
+      {displayedText}
+      <span className="blinking-cursor">|</span>
+      <style>{`
+        .blinking-cursor {
+          animation: blink 1s step-start infinite;
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+      `}</style>
+    </span>
+  );
+};
+
 const Hero: React.FC = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+
+  // Matnlar ro'yxati
+  const animatedTexts = [
+    "Aqlli yordamchi:",
+    "tezkor,",
+    "ishonchli,",
+    "siz uchun",
+  ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-pink-900/20">
@@ -34,9 +92,7 @@ const Hero: React.FC = () => {
               ZominAI
             </span>
             <br />
-            <span className="text-3xl md:text-5xl font-medium text-gray-700 dark:text-gray-300">
-              {t('heroTitle').split('—')[1]?.trim()}
-            </span>
+            <TypewriterMulti texts={animatedTexts} />
           </h1>
 
           {/* Subtitle */}
@@ -53,7 +109,7 @@ const Hero: React.FC = () => {
               <span>{t('getStarted')}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            
+
             <button className="flex items-center space-x-2 px-8 py-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/70 transform hover:scale-105">
               <span>{t('learnMore')}</span>
             </button>
