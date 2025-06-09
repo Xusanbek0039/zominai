@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Copy, CheckCircle, Bot, User } from 'lucide-react';
+import { Send, Copy, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface Message {
@@ -36,6 +36,50 @@ const Chat: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
+  const formatText = (text: string) => {
+    const linkRegex = /\*\*(.*?)\*\*(?:\s*\((https?:\/\/[^\s)]+)\))?/g;
+    const formattedParts: (string | JSX.Element)[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = linkRegex.exec(text)) !== null) {
+      const [fullMatch, boldText, url] = match;
+      const matchStart = match.index;
+
+      if (matchStart > lastIndex) {
+        formattedParts.push(text.slice(lastIndex, matchStart));
+      }
+
+      if (url) {
+        formattedParts.push(
+          <a
+            key={match.index}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-blue-600 hover:underline"
+          >
+            {boldText}
+          </a>
+        );
+      } else {
+        formattedParts.push(
+          <strong key={match.index} className="font-bold">
+            {boldText}
+          </strong>
+        );
+      }
+
+      lastIndex = match.index + fullMatch.length;
+    }
+
+    if (lastIndex < text.length) {
+      formattedParts.push(text.slice(lastIndex));
+    }
+
+    return formattedParts;
+  };
+
   const formatCodeBlocks = (text: string, messageId: string) => {
     const regex = /```([\s\S]*?)```/g;
     const parts = text.split(regex);
@@ -58,7 +102,7 @@ const Chat: React.FC = () => {
           </div>
         );
       } else {
-        return <p key={i} className="whitespace-pre-wrap leading-relaxed">{chunk}</p>;
+        return <p key={i} className="whitespace-pre-wrap leading-relaxed">{formatText(chunk)}</p>;
       }
     });
   };
@@ -89,7 +133,7 @@ const Chat: React.FC = () => {
       });
 
       const data = await response.json();
-      return data.choices[0]?.message?.content || 'Kechirasiz, so\'rovingizni qayta yuboring.';
+      return data.choices[0]?.message?.content || 'Kechirasiz, so‘rovingizni qayta yuboring.';
     } catch {
       return 'Kechirasiz, tizimda xatolik yuz berdi.';
     }
@@ -137,13 +181,10 @@ const Chat: React.FC = () => {
 
     return (
       <div key={msg.id} className={`flex ${isBot ? 'justify-start' : 'justify-end'}`}>
-        <div className={`max-w-3xl flex ${isBot ? 'flex-row' : 'flex-row-reverse'} space-x-3 items-start`}>
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isBot ? 'bg-purple-500' : 'bg-blue-500'}`}>
-            {isBot ? <Bot className="text-white w-5 h-5" /> : <User className="text-white w-5 h-5" />}
-          </div>
+        <div className="max-w-3xl space-x-3 items-start">
           <div className={`rounded-2xl px-6 py-4 shadow-lg ${isBot ? 'bg-white dark:bg-gray-800' : 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'}`}>
             <div className="prose dark:prose-invert max-w-none">
-              {hasCode ? formatCodeBlocks(msg.content, msg.id) : <p className="whitespace-pre-wrap">{msg.content}</p>}
+              {hasCode ? formatCodeBlocks(msg.content, msg.id) : <p className="whitespace-pre-wrap">{formatText(msg.content)}</p>}
             </div>
             <div className="text-xs text-right mt-2 text-gray-400">
               {msg.timestamp.toLocaleTimeString()}
