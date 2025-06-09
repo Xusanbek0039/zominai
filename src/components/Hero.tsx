@@ -110,9 +110,12 @@ const Hero: React.FC = () => {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
 
-            <button className="flex items-center space-x-2 px-8 py-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/70 transform hover:scale-105">
-              <span>{t('learnMore')}</span>
-            </button>
+<a href="https://itclms.uz/signup" target="_blank" rel="noopener noreferrer">
+  <button className="flex items-center space-x-2 px-8 py-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/70 transform hover:scale-105">
+    <span>{t('learnMore')}</span>
+  </button>
+</a>
+
           </div>
 
           {/* Stats */}

@@ -11,27 +11,57 @@ interface Message {
 
 const Chat: React.FC = () => {
   const { t } = useLanguage();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      type: 'bot',
-      content: t('chatWelcome'),
-      timestamp: new Date()
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
+    const welcomeMessage: Message = {
+      id: '1',
+      type: 'bot',
+      content: t('chatWelcome') || 'Assalomu alaykum ZominAI, qanday yordam bera olaman?',
+      timestamp: new Date()
+    };
+    setMessages([welcomeMessage]);
+  }, []);
+
+  useEffect(() => {
     scrollToBottom();
   }, [messages]);
-const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+  const formatCodeBlocks = (text: string, messageId: string) => {
+    const regex = /```([\s\S]*?)```/g;
+    const parts = text.split(regex);
+
+    return parts.map((chunk, i) => {
+      if (i % 2 === 1) {
+        const code = chunk.trim();
+        const isCopied = copiedId === `${messageId}-${i}`;
+        return (
+          <div key={i} className="relative my-4">
+            <button
+              onClick={() => copyCode(code, `${messageId}-${i}`)}
+              className="absolute top-2 right-2 text-xs text-white bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded z-10"
+            >
+              {isCopied ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+            </button>
+            <pre className="bg-gray-900 text-white p-4 rounded-lg overflow-auto text-sm">
+              <code>{code}</code>
+            </pre>
+          </div>
+        );
+      } else {
+        return <p key={i} className="whitespace-pre-wrap leading-relaxed">{chunk}</p>;
+      }
+    });
+  };
 
   const sendToOpenAI = async (message: string): Promise<string> => {
     try {
@@ -42,11 +72,11 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
           'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: 'gpt-4o',
           messages: [
             {
               role: 'system',
-              content: 'You are an AI module established in the Zomin district of Jizzakh region. Please respond to the user only in Uzbek. Be helpful, friendly, and informative. For the first text, please respond with the text Assalam aleikum ZominAI, how can it help you?'
+              content: 'You are an AI assistant from Zomin, respond only in Uzbek.'
             },
             {
               role: 'user',
@@ -58,41 +88,10 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
         })
       });
 
-      if (!response.ok) {
-        throw new Error('API request failed');
-      }
-
       const data = await response.json();
-      return data.choices[0]?.message?.content || 'Sorry, I could not process your request.';
-    } catch (error) {
-      console.error('OpenAI API Error:', error);
-      return 'Kechirasiz, xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.';
-    }
-  };
-
-  const sendToResend = async (userMessage: string, userInfo: any) => {
-    try {
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
-        },
-        body: JSON.stringify({
-          from: 'ZominAI <noreply@zominai.uz>',
-          to: ['admin@zominai.uz'],
-          subject: 'New Chat Message - ZominAI',
-          html: `
-            <h2>New message from ZominAI Chat</h2>
-            <p><strong>User:</strong> Anonymous User</p>
-            <p><strong>Message:</strong> ${userMessage}</p>
-            <p><strong>IP:</strong> ${userInfo.ip || 'Unknown'}</p>
-            <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
-          `
-        })
-      });
-    } catch (error) {
-      console.error('Resend API Error:', error);
+      return data.choices[0]?.message?.content || 'Kechirasiz, so\'rovingizni qayta yuboring.';
+    } catch {
+      return 'Kechirasiz, tizimda xatolik yuz berdi.';
     }
   };
 
@@ -101,122 +100,53 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
-    const userMessageObj: Message = {
+    const userMsg: Message = {
       id: Date.now().toString(),
       type: 'user',
       content: userMessage,
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessageObj]);
+    setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsLoading(true);
 
-    // Send to Resend API for logging
-    try {
-      const userInfo = {
-        ip: 'Unknown' // In a real app, you'd get this from the server
-      };
-      await sendToResend(userMessage, userInfo);
-    } catch (error) {
-      console.error('Failed to log message:', error);
-    }
+    const aiResponse = await sendToOpenAI(userMessage);
+    const botMsg: Message = {
+      id: (Date.now() + 1).toString(),
+      type: 'bot',
+      content: aiResponse,
+      timestamp: new Date()
+    };
 
-    // Get AI response
-    try {
-      const aiResponse = await sendToOpenAI(userMessage);
-      const botMessageObj: Message = {
-        id: (Date.now() + 1).toString(),
-        type: 'bot',
-        content: aiResponse,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, botMessageObj]);
-    } catch (error) {
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        type: 'bot',
-        content: 'Kechirasiz, hozir javob bera olmayman. Iltimos, keyinroq urinib ko\'ring.',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    }
-
+    setMessages(prev => [...prev, botMsg]);
     setIsLoading(false);
   };
 
-  const copyCode = async (text: string, messageId: string) => {
+  const copyCode = async (text: string, blockId: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopiedId(messageId);
+      setCopiedId(blockId);
       setTimeout(() => setCopiedId(null), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-    }
+    } catch {}
   };
 
-  const renderMessage = (message: Message) => {
-    const isBot = message.type === 'bot';
-    const hasCode = message.content.includes('```') || message.content.includes('<code>');
+  const renderMessage = (msg: Message) => {
+    const isBot = msg.type === 'bot';
+    const hasCode = msg.content.includes('```');
 
     return (
-      <div
-        key={message.id}
-        className={`flex ${isBot ? 'justify-start' : 'justify-end'} animate-fade-in-up`}
-      >
-        <div className={`max-w-3xl flex ${isBot ? 'flex-row' : 'flex-row-reverse'} items-start space-x-3`}>
-          {/* Avatar */}
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-            isBot 
-              ? 'bg-gradient-to-r from-purple-500 to-pink-500' 
-              : 'bg-gradient-to-r from-blue-500 to-indigo-500'
-          }`}>
-            {isBot ? (
-              <Bot className="w-5 h-5 text-white" />
-            ) : (
-              <User className="w-5 h-5 text-white" />
-            )}
+      <div key={msg.id} className={`flex ${isBot ? 'justify-start' : 'justify-end'}`}>
+        <div className={`max-w-3xl flex ${isBot ? 'flex-row' : 'flex-row-reverse'} space-x-3 items-start`}>
+          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isBot ? 'bg-purple-500' : 'bg-blue-500'}`}>
+            {isBot ? <Bot className="text-white w-5 h-5" /> : <User className="text-white w-5 h-5" />}
           </div>
-
-          {/* Message */}
-          <div className={`px-6 py-4 rounded-2xl shadow-lg ${
-            isBot 
-              ? 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700' 
-              : 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
-          }`}>
-            <div className="prose prose-sm max-w-none">
-              {hasCode ? (
-                <div className="relative">
-                  <pre className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto">
-                    <code className="text-sm">{message.content}</code>
-                  </pre>
-                  <button
-                    onClick={() => copyCode(message.content, message.id)}
-                    className="absolute top-2 right-2 px-3 py-1 bg-gray-700 text-white text-xs rounded-md hover:bg-gray-600 transition-colors flex items-center space-x-1"
-                  >
-                    {copiedId === message.id ? (
-                      <>
-                        <CheckCircle className="w-3 h-3" />
-                        <span>{t('codeCopied')}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3 h-3" />
-                        <span>{t('copyCode')}</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-              ) : (
-                <p className={`${isBot ? 'text-gray-800 dark:text-gray-200' : 'text-white'} leading-relaxed`}>
-                  {message.content}
-                </p>
-              )}
+          <div className={`rounded-2xl px-6 py-4 shadow-lg ${isBot ? 'bg-white dark:bg-gray-800' : 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'}`}>
+            <div className="prose dark:prose-invert max-w-none">
+              {hasCode ? formatCodeBlocks(msg.content, msg.id) : <p className="whitespace-pre-wrap">{msg.content}</p>}
             </div>
-            <div className={`text-xs mt-2 ${
-              isBot ? 'text-gray-500 dark:text-gray-400' : 'text-blue-100'
-            }`}>
-              {message.timestamp.toLocaleTimeString()}
+            <div className="text-xs text-right mt-2 text-gray-400">
+              {msg.timestamp.toLocaleTimeString()}
             </div>
           </div>
         </div>
@@ -225,58 +155,45 @@ const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-blue-900/20 flex flex-col">
-      {/* Chat Container */}
-      <div className="flex-1 max-w-6xl mx-auto w-full px-4 py-8 flex flex-col">
-        {/* Messages */}
-        <div className="flex-1 space-y-6 mb-6 overflow-y-auto">
-          {messages.map(renderMessage)}
-          {isLoading && (
-            <div className="flex justify-start animate-fade-in-up">
-              <div className="max-w-3xl flex items-start space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-white" />
-                </div>
-                <div className="px-6 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  </div>
-                </div>
-              </div>
+    <div className="min-h-screen pt-16 bg-gradient-to-br from-slate-50 to-blue-100 dark:from-slate-900 dark:to-blue-900/20">
+      <div className="max-w-4xl mx-auto px-4 pb-28 pt-4 space-y-6">
+        {messages.map(renderMessage)}
+        {isLoading && (
+          <div className="flex justify-start">
+            <div className="flex items-center space-x-2 px-6 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg">
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce delay-75"></div>
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce delay-150"></div>
             </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
 
-        {/* Input Form - Moved to bottom */}
-<div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-xl px-4 z-50">
-  <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-full shadow-md border border-gray-200 dark:border-gray-700 p-2 flex items-center space-x-2 transition-all">
-    <textarea
-      value={input}
-      onChange={(e) => setInput(e.target.value)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          handleSubmit(e);
-        }
-      }}
-      placeholder={t('typeMessage')}
-      className="flex-1 px-4 py-2 bg-transparent text-sm resize-none focus:outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-      rows={1}
-      style={{ minHeight: '40px', maxHeight: '100px' }}
-    />
-    <button
-      type="submit"
-      disabled={!input.trim() || isLoading}
-      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 text-white rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-md"
-    >
-      <Send className="w-4 h-4" />
-    </button>
-  </form>
-</div>
-
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-xl px-4">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-full shadow-md border border-gray-200 dark:border-gray-700 p-2 flex items-center space-x-2">
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e);
+              }
+            }}
+            placeholder={t('typeMessage') || 'Xabar yozing...'}
+            className="flex-1 bg-transparent resize-none focus:outline-none text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 px-4 py-2"
+            rows={1}
+            style={{ minHeight: '40px', maxHeight: '100px' }}
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || isLoading}
+            className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-md disabled:opacity-50"
+          >
+            <Send className="w-4 h-4" />
+          </button>
+        </form>
       </div>
     </div>
   );

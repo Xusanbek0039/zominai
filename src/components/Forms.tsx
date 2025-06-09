@@ -9,7 +9,7 @@ const Forms: React.FC = () => {
   const [courseForm, setCourseForm] = useState({
     firstName: '',
     lastName: '',
-    phone: '+998',
+    phone: '+998 ',
     course: ''
   });
   const [courseSuccess, setCourseSuccess] = useState(false);
@@ -24,12 +24,12 @@ const Forms: React.FC = () => {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
-    if (!val.startsWith('+998')) {
-      val = '+998';
+    if (!val.startsWith('+998 ')) {
+      val = '+998 ';
     }
     const afterCode = val.slice(4).replace(/\D/g, '');
     const limited = afterCode.slice(0, 9);
-    val = '+998' + limited;
+    val = '+998 ' + limited;
     setCourseForm(prev => ({ ...prev, phone: val }));
   };
 
@@ -58,7 +58,7 @@ const Forms: React.FC = () => {
       );
 
       setCourseSuccess(true);
-      setCourseForm({ firstName: '', lastName: '', phone: '+998', course: '' });
+      setCourseForm({ firstName: '', lastName: '', phone: '+998 ', course: '' });
       setTimeout(() => setCourseSuccess(false), 3000);
     } catch (err) {
       console.error(err);

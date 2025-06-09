@@ -12,7 +12,7 @@ export const languageData = {
     heroTitle: "ZominAI — Aqlli yordamchi: tezkor, ishonchli, siz uchun ",
     heroSubtitle: "Zomin tumani IT Creative o'quvchilari tomonidan tashkil etilgan AI modul sizning yordamchingiz!",
     getStarted: "Boshlash",
-    learnMore: "Batafsil",
+    learnMore: "Kursga yozilish",
     
     // Forms
     firstName: "Ism",

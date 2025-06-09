@@ -12,9 +12,11 @@
   "dependencies": {
     "emailjs-com": "^3.2.0",
     "lucide-react": "^0.344.0",
+    "prettier": "^3.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.20.1"
+    "react-router-dom": "^6.20.1",
+    "react-syntax-highlighter": "^15.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
