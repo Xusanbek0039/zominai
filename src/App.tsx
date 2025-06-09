@@ -6,12 +6,12 @@ import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Chat from './pages/Chat';
+import NotFound from './pages/NotFound'; // ✅ 404 sahifa import qilindi
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -32,6 +32,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="*" element={<NotFound />} /> {/* ✅ 404 marshrut qo‘shildi */}
             </Routes>
           </div>
         </Router>
