@@ -229,7 +229,7 @@ const AboutDeveloper: React.FC = () => {
 
   {/* Instagram */}
   <a
-    href="https://instagram.com/yourprofile"
+    href="https://instagram.com/husanbek_coder"
     target="_blank"
     rel="noopener noreferrer"
     className="group flex items-center space-x-2 px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
