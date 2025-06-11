@@ -51,11 +51,12 @@ const paths = [
 ];
 
 const CareerPaths: React.FC = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <section className="relative min-h-screen py-20 px-6 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="max-w-7xl mx-auto text-center">
+        {/* Title */}
         <div className="mb-12">
           <TrendingUp className="w-12 h-12 mx-auto text-indigo-600 dark:text-indigo-400 mb-4 animate-pulse" />
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
@@ -88,17 +89,21 @@ const CareerPaths: React.FC = () => {
         {/* CTA Button */}
         <div className="mt-16">
           <button
-            onClick={() => setModalOpen(true)}
+            onClick={() => setShowModal(true)}
             className="group inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             <span>Yo‘nalishni tanlang</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
-
-        {/* Modal */}
-        <FormsModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <FormsModal onClose={() => setShowModal(false)} />
+        </div>
+      )}
     </section>
   );
 };

@@ -168,10 +168,13 @@ const AboutDeveloper: React.FC = () => {
                 {/* Info */}
                 <div className="flex-1 text-center lg:text-left">
                   <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                    {t('developerName')}
+                    {"Usmonqulov Ozodbek"}
                   </h3>
                   <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
                     {t('developerRole')}
+                  </p>
+                                    <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold mb-6">
+                    {"Zomin tumani 24-maktab 11-sinf o'quvchisi"}
                   </p>
 
                   {/* Skills */}
@@ -192,7 +195,7 @@ const AboutDeveloper: React.FC = () => {
                   {/* Links */}
                   <div className="flex justify-center lg:justify-start space-x-4 mb-8">
                     <a
-                      href="https://github.com/abdulloh-yusupov"
+                      href="https://github.com/xusanbek0039"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group flex items-center space-x-2 px-6 py-3 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
@@ -202,7 +205,7 @@ const AboutDeveloper: React.FC = () => {
                     </a>
 
                     <a
-                      href="https://t.me/abdulloh_yusupov"
+                      href="https://t.me/husanbek_coder"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group flex items-center space-x-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
