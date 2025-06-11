@@ -1,3 +1,5 @@
+// Qo‘shimcha sahifalar qo‘shilgan va mobilda "Chatni boshlash" tugmasi faqat / sahifasida ko‘rinadi
+
 import React, { useState } from 'react';
 import {
   Bot,
@@ -9,6 +11,8 @@ import {
   X,
   Youtube,
   Send,
+  BookOpen,
+  School,
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -46,7 +50,6 @@ const NavButton: React.FC<NavButtonProps> = ({ to, label, icon, external }) => {
     >
       {icon}
       <span>{label}</span>
-
       {isActive && (
         <span className="absolute inset-0 rounded-full ring-2 ring-purple-400/60 animate-pulse pointer-events-none"></span>
       )}
@@ -88,6 +91,8 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center space-x-4">
             <NavButton to="/" label={t('home')} icon={<HomeIcon className="w-4 h-4" />} />
             <NavButton to="/chat" label={t('chat')} icon={<MessageCircle className="w-4 h-4" />} />
+            <NavButton to="/center-haqida" label="Zomin academy" icon={<School className="w-4 h-4" />} />
+            <NavButton to="/kurs-haqida" label="IT haqida" icon={<BookOpen className="w-4 h-4" />} />
             <NavButton
               to="https://youtube.com/@it_creative"
               label="YouTube"
@@ -104,7 +109,6 @@ const Navbar: React.FC = () => {
 
           {/* Right-side Controls */}
           <div className="flex items-center space-x-4 md:space-x-2">
-            {/* Theme toggle */}
             <button
               onClick={toggleTheme}
               className="p-2 rounded-md bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
@@ -131,21 +135,13 @@ const Navbar: React.FC = () => {
           <div className="md:hidden flex flex-col space-y-2 mt-4 pb-4 border-t border-gray-200 dark:border-gray-700">
             <NavButton to="/" label={t('home')} icon={<HomeIcon className="w-4 h-4" />} />
             <NavButton to="/chat" label={t('chat')} icon={<MessageCircle className="w-4 h-4" />} />
-            <NavButton
-              to="https://youtube.com"
-              label="YouTube"
-              icon={<Youtube className="w-4 h-4" />}
-              external
-            />
-            <NavButton
-              to="https://t.me/zominai"
-              label="Telegram"
-              icon={<Send className="w-4 h-4" />}
-              external
-            />
+            <NavButton to="/center-haqida" label="Zomin academy" icon={<School className="w-4 h-4" />} />
+            <NavButton to="/kurs-haqida" label="IT haqida" icon={<BookOpen className="w-4 h-4" />} />
+            <NavButton to="https://youtube.com" label="YouTube" icon={<Youtube className="w-4 h-4" />} external />
+            <NavButton to="https://t.me/zominai" label="Telegram" icon={<Send className="w-4 h-4" />} external />
 
-            {/* Chat CTA (only in mobile) */}
-            {location.pathname !== '/chat' && (
+            {/* Chat CTA (faqat home sahifada) */}
+            {location.pathname === '/' && (
               <button
                 onClick={() => {
                   navigate('/chat');

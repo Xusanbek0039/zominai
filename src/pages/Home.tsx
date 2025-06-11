@@ -1,6 +1,5 @@
 import React from 'react';
 import Hero from '../components/Hero';
-import Forms from '../components/Forms';
 import AboutDeveloper from '../components/AboutDeveloper';
 import Testimonials from '../components/Testimonials';
 import Sponsors from '../components/Sponsors';
@@ -20,7 +19,6 @@ const Home: React.FC = () => {
       {/* All content on top */}
       <div className="relative z-10">
         <Hero />
-        <Forms />
         <AboutDeveloper />
         <Testimonials />
         <Sponsors />
