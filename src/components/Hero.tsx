@@ -1,6 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { MessageCircle, Handshake, Sparkles, Brain, Cpu, Sun, Moon, Zap, Code, Database } from 'lucide-react';
-
+import { Typewriter } from 'react-simple-typewriter';
+const TypingLanguages = () => {
+  return (
+    <span className="bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">
+      <Typewriter
+        words={[
+          "O'zbek",
+          "Русский",
+          "English",
+          "Türkçe"
+        ]}
+        loop={true}
+        cursor
+        cursorStyle="|"
+        typeSpeed={100}
+        deleteSpeed={60}
+        delaySpeed={300}
+      />
+    </span>
+  );
+};
 const Hero = () => {
   const [typedText, setTypedText] = useState('');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -11,6 +31,8 @@ const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMouseMoving, setIsMouseMoving] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+
+
 
   const words = [
     'Oson integratsiya',
@@ -310,7 +332,7 @@ const Hero = () => {
             </span>
             <span className="bg-gradient-to-r from-cyan-600 via-purple-600 to-cyan-700 dark:from-cyan-400 dark:via-purple-400 dark:to-cyan-500 bg-clip-text text-transparent">uz</span>
             <span className="text-gray-800 dark:text-white"> - birinchi </span>
-            <span className="bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">O'zbek</span>
+            <span className="bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent"><TypingLanguages /></span>
             <br />
             <span className="text-gray-800 dark:text-white">nutqini aniqlash va sintez qilish</span>
             <br />
