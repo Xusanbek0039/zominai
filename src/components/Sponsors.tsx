@@ -6,40 +6,45 @@ const Sponsors: React.FC = () => {
 
   const sponsors = [
     {
-      name: "TechCorp",
-      logo: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-      description: "Innovatsion texnologiyalar kompaniyasi"
+      name: "IT Park O'zbekiston",
+      logo: "https://it-park.uz/images/logo-park.png",
+      description: "O'zbekistonda birinchi IT Markaz",
+      url: "https://it-park.uz"
     },
     {
-      name: "InnovateLab",
-      logo: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-      description: "Yoshlar uchun startap inkubatori"
+      name: "Yoshlar ishlari agentligi",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmARO1IrzuylEN4_0lVHb6OA561gPKaDpyOg&s",
+      description: "Yoshlar uchun startap inkubatori",
+      url: "https://gov.uz/oz/yoshlar"
     },
     {
-      name: "FutureSoft",
-      logo: "https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-      description: "Kelajak dasturiy ta'minot yetkazuvchisi"
+      name: "Raqamli vazirligi",
+      logo: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQZzmDrVV7xapBoLjoR1s0k8S8sxQAIyWMzj1_CAmcfLy9BNlN3",
+      description: "O'zbekiston raqamli texnalogiyalar vazirligi",
+      url: "https://gov.uz/oz/digital"
     },
     {
-      name: "CodeMasters",
-      logo: "https://images.pexels.com/photos/1181243/pexels-photo-1181243.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-      description: "Dasturchilar jamiyati"
+      name: "IT Shaxarcha",
+      logo: "/it_shaxarcha.png",
+      description: "Zomin tumani IT Shaxarchasi",
+      url: "https://itcreative.uz" 
     },
-    {
-      name: "DigitalHub",
-      logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-      description: "Raqamli innovatsiyalar markazi"
-    },
-    {
-      name: "AI Solutions",
-      logo: "https://images.pexels.com/photos/1181393/pexels-photo-1181393.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
-      description: "Sun'iy intellekt bo'yicha ilg'or echimlar"
-    }
+    // {
+    //   name: "DigitalHub",
+    //   logo: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+    //   description: "Raqamli innovatsiyalar markazi",
+    //   url: "https://digitalhub.uz" 
+    // },
+    // {
+    //   name: "AI Solutions",
+    //   logo: "https://images.pexels.com/photos/1181393/pexels-photo-1181393.jpeg?auto=compress&cs=tinysrgb&w=200&h=100&fit=crop",
+    //   description: "Sun'iy intellekt bo'yicha ilg'or echimlar",
+    //   url: "https://aisolutions.uz" 
+    // }
   ];
 
   return (
     <section className="py-20 bg-white dark:bg-gray-800 overflow-hidden relative">
-      {/* Inline style for animation */}
       <style>
         {`
           @keyframes scrollX {
@@ -65,8 +70,11 @@ const Sponsors: React.FC = () => {
         <div className="overflow-hidden">
           <div className="scrolling-carousel">
             {[...sponsors, ...sponsors].map((sponsor, index) => (
-              <div
+              <a
                 key={`${sponsor.name}-${index}`}
+                href={sponsor.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex-shrink-0 mx-8 text-center"
               >
                 <div className="w-48 h-24 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-shadow grayscale hover:grayscale-0">
@@ -82,7 +90,7 @@ const Sponsors: React.FC = () => {
                 <p className="text-xs text-gray-600 dark:text-gray-400">
                   {sponsor.description}
                 </p>
-              </div>
+              </a>
             ))}
           </div>
         </div>

@@ -4,6 +4,7 @@ import AboutDeveloper from '../components/AboutDeveloper';
 import Testimonials from '../components/Testimonials';
 import Sponsors from '../components/Sponsors';
 import Footer from '../components/Footer';
+import FAQSection from '../components/FAQSection';
 
 const Home: React.FC = () => {
   return (
@@ -21,8 +22,11 @@ const Home: React.FC = () => {
         <Hero />
         <AboutDeveloper />
         <Testimonials />
+        <FAQSection />
+
         <Sponsors />
         <Footer />
+
       </div>
     </div>
   );

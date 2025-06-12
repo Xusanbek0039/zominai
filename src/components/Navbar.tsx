@@ -10,6 +10,7 @@ import {
   X,
   Youtube,
   Send,
+  Blocks,
   BookOpen,
   School,
   MoreHorizontal,
@@ -139,10 +140,16 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="flex items-center space-x-2 px-8 py-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/70 transform hover:scale-105">
-                <GraduationCap className="w-5 h-5" />
-                <span>{t('learnMore')}</span>
-              </button>
+<button className="group relative overflow-hidden flex items-center space-x-2 px-8 py-4 rounded-full font-semibold text-lg border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white bg-white/10 dark:bg-gray-800/40 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r from-blue-500/30 to-purple-500/30">
+  <span className="relative z-10 flex items-center gap-2 transition-all duration-300 group-hover:translate-y-[-2px]">
+    <GraduationCap className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
+    <span>Kursga yozilish</span>
+  </span>
+
+  {/* Glowing animation layer */}
+  <div className="absolute inset-0 z-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+</button>
+
             </a>
             <div className="relative">
               <button onClick={() => setMoreOpen(!moreOpen)} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
@@ -152,6 +159,8 @@ const Navbar: React.FC = () => {
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg py-2 z-50">
                   <NavButton to="https://youtube.com/@it_creative" label="YouTube" icon={<Youtube className="w-4 h-4" />} external />
                   <NavButton to="https://t.me/it_creative_news" label="Telegram" icon={<Send className="w-4 h-4" />} external />
+                  <NavButton to="https://itc-blog.uz" label="Blog" icon={<Blocks className="w-4 h-4" />} external />
+
                 </div>
               )}
             </div>
@@ -185,15 +194,23 @@ const Navbar: React.FC = () => {
             <NavButton to="/kurs-haqida" label="IT haqida" icon={<BookOpen className="w-4 h-4" />} />
             <NavButton to="https://youtube.com/@it_creative" label="YouTube" icon={<Youtube className="w-4 h-4" />} external />
             <NavButton to="https://t.me/it_creative_news" label="Telegram" icon={<Send className="w-4 h-4" />} external />
+            <NavButton to="https://itc-blog.uz" label="Blog" icon={<Blocks className="w-4 h-4" />} external />
+
             <a
               href="https://itclms.uz/signup"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="flex items-center space-x-2 px-8 py-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/70 transform hover:scale-105">
-                <GraduationCap className="w-5 h-5" />
-                <span>{t('learnMore')}</span>
-              </button>
+<button className="group relative overflow-hidden flex items-center space-x-2 px-8 py-4 rounded-full font-semibold text-lg border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white bg-white/10 dark:bg-gray-800/40 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r from-blue-500/30 to-purple-500/30">
+  <span className="relative z-10 flex items-center gap-2 transition-all duration-300 group-hover:translate-y-[-2px]">
+    <GraduationCap className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
+    <span>Kursga yozilish</span>
+  </span>
+
+  {/* Glowing animation layer */}
+  <div className="absolute inset-0 z-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+</button>
+
             </a>
             {location.pathname === '/' && (
               <button
