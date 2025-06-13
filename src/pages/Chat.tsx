@@ -144,7 +144,7 @@ const Chat: React.FC = () => {
           { role: 'user', content: message },
         ],
         stream: true,
-        temperature: 1.1,
+        temperature: 1,
       }),
     });
 
