@@ -140,15 +140,17 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-<button className="group relative overflow-hidden flex items-center space-x-2 px-8 py-4 rounded-full font-semibold text-lg border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white bg-white/10 dark:bg-gray-800/40 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r from-blue-500/30 to-purple-500/30">
-  <span className="relative z-10 flex items-center gap-2 transition-all duration-300 group-hover:translate-y-[-2px]">
-    <GraduationCap className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
-    <span>Kursga yozilish</span>
-  </span>
+<button className="group relative inline-flex items-center space-x-2 px-4 py-2 rounded-full font-medium text-sm border border-transparent text-white bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg focus:outline-none">
+  {/* Inner glow border */}
+  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400/30 via-pink-400/30 to-indigo-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm z-0"></div>
 
-  {/* Glowing animation layer */}
-  <div className="absolute inset-0 z-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+  {/* Text + Icon */}
+  <span className="relative z-10 flex items-center gap-1 transition-transform duration-300 group-hover:-translate-y-0.5">
+    <GraduationCap className="w-4 h-4 text-white transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105" />
+    <span className="tracking-wide">Kursga yozilish</span>
+  </span>
 </button>
+
 
             </a>
             <div className="relative">
@@ -201,9 +203,9 @@ const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-<button className="group relative overflow-hidden flex items-center space-x-2 px-8 py-4 rounded-full font-semibold text-lg border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white bg-white/10 dark:bg-gray-800/40 backdrop-blur-sm shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r from-blue-500/30 to-purple-500/30">
-  <span className="relative z-10 flex items-center gap-2 transition-all duration-300 group-hover:translate-y-[-2px]">
-    <GraduationCap className="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" />
+<button className="group relative overflow-hidden flex items-center space-x-2 px-4 py-2 rounded-full font-medium text-sm border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-white bg-white/10 dark:bg-gray-800/40 backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r from-blue-500/30 to-purple-500/30">
+  <span className="relative z-10 flex items-center gap-1 transition-all duration-300 group-hover:-translate-y-0.5">
+    <GraduationCap className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12" />
     <span>Kursga yozilish</span>
   </span>
 
