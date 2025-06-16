@@ -64,10 +64,10 @@ To get a local copy up and running, follow these simple steps.
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/zominai-website.git
+    git clone https://github.com/xusanbek0039/zominai.git
     cd zominai-website
     ```
-    *(Note: Replace `your-username/zominai-website.git` with the actual repository URL if you are not the owner and are cloning from the source.)*
+    *(Note: Replace `xusanbek0039/zominai-website.git` with the actual repository URL if you are not the owner and are cloning from the source.)*
 
 2.  **Install NPM packages:**
     ```sh
