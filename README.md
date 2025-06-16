@@ -1,227 +1,117 @@
-# ZominAI 🌐
+# ZominAI Website
 
-**Zomin tumani o‘quvchilari va jamoasiga oid onlayn platforma**  
-ZominAI — bu Zomin tumani o‘quvchilari bilan jamoa o‘rtasida interfaol kommunikatsiya o‘rnatish uchun mo‘ljallangan zamonaviy web-ilova.
+ZominAI is the official website for the ZominAI chatbot, an intelligent artificial intelligence chatbot developed by talented students from the Zomin IT Center in the Zomin district. The platform aims to provide a convenient, fast, and smart AI chat experience.
 
----
+This project is built with modern web technologies to showcase the chatbot and provide information about the Zomin IT Center and its initiatives.
 
-## 📌 Asosiy imkoniyatlar
+## Features
 
-- Chatbot integratsiyasi — sun’iy intellekt yordamida foydalanuvchilarning savollariga javob berish.
-- Foydalanuvchilarning savollarini va javoblarini tarix boyicha saqlash.
-- API bilan muloqot va real‑time chat.
-- Zamonaviy front-end: TailwindCSS bilan tezkor va chiroyli UI.
-- Orqa tarafni TypeScript va Node.js yordamida qurish.
-- MongoDB bilan ma’lumotlar bazasi.
-- Ishlab chiqish va joylashtirish uchun Vite.js va Netlify sozlamalari mavjud.
+*   **AI Chatbot Interface**: Access the ZominAI chatbot for intelligent conversations and assistance.
+*   **Zomin IT Center Information**: Learn more about the Zomin IT Center, its mission, and activities (`/center-haqida`).
+*   **Course Details**: Explore programming courses offered at the center (`/kurs-haqida`).
+*   **FAQ Section**: Find answers to frequently asked questions (`/faq`).
+*   **Testimonials**: Read what others are saying about ZominAI and the IT Center.
+*   **Sponsor Recognition**: View the sponsors supporting the project.
+*   **Dual Language Support**: Switch between Uzbek and Russian languages.
+*   **Theme Customization**: Toggle between light and dark modes for comfortable viewing.
+*   **Responsive Design**: Adapts to various screen sizes for a seamless experience on desktop and mobile devices.
 
----
+## Technology Stack
 
-## 📁 Fayl tuzilmasi
+*   **Frontend Framework**: React (`react`)
+*   **Build Tool**: Vite (`vite`)
+*   **Language**: TypeScript (`typescript`)
+*   **Styling**: Tailwind CSS (`tailwindcss`)
+*   **Routing**: React Router DOM (`react-router-dom`)
+*   **Animations**: Framer Motion (`framer-motion`)
+*   **Icons**: Lucide React (`lucide-react`)
+*   **Email Service**: EmailJS (`emailjs-com`) for client-side email sending (e.g., contact forms).
+*   **Linting**: ESLint (`eslint`)
+*   **Code Formatting**: Prettier (`prettier`)
 
-```bash
-├── public/ # Statik fayllar
-│ └── favicon.ico
-├── src/ # Manba kodlar
-│ └── … (komponentlar, servisy va boshqalar)
-├── index.html # Asosiy HTML sahifa
-├── input.css # Tailwind uchun custom inputlar
-├── output.css # Unprocessed Tailwind CSS
-├── tailwind.config.js # Tailwind sozlamalari
-├── postcss.config.js # PostCSS konfiguratsiyasi
-├── eslint.config.js # ESLint qoidalari
-├── tsconfig*.json # TypeScript konfiguratsiyasi
-├── vite.config.ts # Vite build sozlamalari
-├── package.json # Loyihaning nimadir va scriptlari
-└── netlify.toml # Netlify hosting uchun sozlamalar
+## Project Structure
+
+A brief overview of the key directories in this project:
+
+```
+zominai-website/
+├── public/               # Static assets (images, favicon, etc.)
+├── src/                  # Main source code
+│   ├── components/       # Reusable React components
+│   ├── contexts/         # React context providers (Theme, Language)
+│   ├── pages/            # Page-level components (Home, Chat, About, etc.)
+│   ├── App.tsx           # Root application component, sets up routing
+│   ├── main.tsx          # Main entry point of the application
+│   └── index.css         # Global styles
+├── .gitignore            # Files and folders to be ignored by Git
+├── index.html            # Main HTML entry point for Vite
+├── package.json          # Project metadata, dependencies, and scripts
+├── tailwind.config.js    # Tailwind CSS configuration
+├── tsconfig.json         # TypeScript compiler configuration
+└── vite.config.ts        # Vite configuration
+└── README.md             # This file
 ```
 
----
+## Getting Started
 
-## 🛠️ Texnologiyalar
+To get a local copy up and running, follow these simple steps.
 
-| Qism            | Texnologiya              |
-|----------------|--------------------------|
-| Front-end       | HTML5, TailwindCSS, TypeScript |
-| Build         | Vite.js                  |
-| Linter       | ESLint                   |
-| Orqa taraf (API) | Node.js, TypeScript        |
-| DB            | MongoDB                  |
-| Joylashtirish   | Netlify                  |
+### Prerequisites
 
----
+*   Node.js (which includes npm) installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
 
-## ⚙️ Loyihani ishga tushirish
+### Installation & Setup
 
-1. **Kodlarni klon qiling**  
-   ```bash
-   git clone https://github.com/Xusanbek0039/zominai.git
-   cd zominai
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/your-username/zominai-website.git
+    cd zominai-website
+    ```
+    *(Note: Replace `your-username/zominai-website.git` with the actual repository URL if you are not the owner and are cloning from the source.)*
+
+2.  **Install NPM packages:**
+    ```sh
+    npm install
     ```
 
+### Running the Project
 
-2. Yordamchi kutubxonalarni o‘rnating
-```bash
-npm install
-```
-3. Mahalliy serverni ishga tushiring
-```bash
-npm run dev
-```
-4. Brauzerda oching
-http://localhost:3000 (yoki konsolda yozilgan URL).
+*   **To start the development server:**
+    ```sh
+    npm run dev
+    ```
+    This will typically open the application in your default web browser at `http://localhost:5173` (the port might vary if 5173 is in use).
 
-🌍 API sozlamalari
-vite.config.ts va backend integratsiyasida Chatbot uchun AI API tokenlari kerak.
+*   **To build the application for production:**
+    ```sh
+    npm run build
+    ```
+    The production-ready files will be placed in the `dist/` directory.
 
-.env faylida quyidagilar bo‘lishi lozim:
-```bash
-VITE_API_URL=...
-API_TOKEN=...
-```
-🚀 Deploy qilish (Netlify)
-Netlify’dagi loyihangiz uchun netlify.toml fayl tayyor.
+*   **To lint the codebase:**
+    ```sh
+    npm run lint
+    ```
+    This command checks the code for linting errors and potential issues based on the ESLint configuration.
 
-build script: npm run build
+*   **To preview the production build locally:**
+    ```sh
+    npm run preview
+    ```
+    This command serves the `dist/` folder, allowing you to test the production build before deployment.
 
-Netlify saytiga deploy qiling.
+## About the Creators
 
-OUTPUT_DIR = dist bo‘lishi kerak.
+This website and the ZominAI chatbot are initiatives by the talented students of the **Zomin IT Center**, located in the Zomin district. This project showcases their skills in web development, AI, and user interface design. It serves as a testament to their learning and dedication to building innovative solutions.
 
-✅ Qo‘shish va hissa qo‘shish
-Agar loyihaga hissa qo‘shmoqchi bo‘lsangiz:
+For more information about the Zomin IT Center or to get in touch, please refer to the contact details available on the website.
 
-Fork qiling.
+## License
 
-Yangi branch oching (feat/… yoki fix/…).
+A standard `LICENSE` file (e.g., MIT, Apache 2.0) was not found in the root of this project at the time of this writing.
 
-O‘zgartirishlar qiling.
+However, licensing information may be available in the following files:
+*   `public/litsenziya.pdf`
+*   `public/litsenziya.htm`
 
-Pull request oching — ilovangizni ko‘rib, qayta aloqa beraman.
-
-📞 Aloqa
-Loyiha muallifi: Xusanbek0039
-
-📝 Litsenziya
-(Bu yerga loyiha litsenziyasini yozing, masalan MIT yoki boshqa)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ZominAI 🌐
-
-**An online platform for students and the community of Zomin district**
-ZominAI is a modern web application designed to establish interactive communication between students and the community of Zomin district.
-
----
-
-## 📌 Main features
-
-- Chatbot integration - answering user questions using artificial intelligence.
-- Storing user questions and answers in history.
-- Communication with API and real-time chat.
-- Modern front-end: fast and beautiful UI with TailwindCSS.
-- Building the back-end with TypeScript and Node.js.
-- Database with MongoDB.
-- Vite.js and Netlify settings are available for development and deployment.
-
----
-
-## 📁 File structure
-
-```bash
-├── public/ # Static files
-│ └── favicon.ico
-├── src/ # Source codes
-│ └── … (components, services, etc.)
-├── index.html # Main HTML page
-├── input.css # Custom inputs for Tailwind
-├── output.css # Unprocessed Tailwind CSS
-├── tailwind.config.js # Tailwind settings
-├── postcss.config.js # PostCSS configuration
-├── eslint.config.js # ESLint rules
-├── tsconfig*.json # TypeScript configuration
-├── vite.config.ts # Vite build settings
-├── package.json # Project stuff and scripts
-└── netlify.toml # Netlify hosting settings
-```
-
----
-
-## 🛠️ Technologies
-
-| Section | Technology |
-|----------------|-------------------|
-| Front-end | HTML5, TailwindCSS, TypeScript |
-| Build | Vite.js |
-| Linter | ESLint |
-| Backend (API) | Node.js, TypeScript |
-| DB | MongoDB |
-| Deployment | Netlify |
-
----
-
-## ⚙️ Launch the project
-
-1. **Clone the code**
-```bash
-git clone https://github.com/Xusanbek0039/zominai.git
-cd zominai
-```
-
-2. Install the supporting libraries
-```bash
-npm install
-```
-3. Start the local server
-```bash
-npm run dev
-```
-4. Open in the browser
-http://localhost:3000 (or the URL typed in the console).
-
-🌍 API settings
-vite.config.ts and backend integration require AI API tokens for Chatbot.
-
-The .env file should contain the following:
-```bash
-VITE_API_URL=...
-API_TOKEN=...
-```
-🚀 Deploy (Netlify)
-The netlify.toml file for your Netlify project is ready.
-
-build script: npm run build
-
-Deploy to the Netlify website.
-
-OUTPUT_DIR = dist should be.
-
-✅ Contribute and contribute
-If you want to contribute to the project:
-
-Fork.
-
-Open a new branch (feat/… or fix/…).
-
-Make changes.
-
-Open a pull request — I will review your application and get back to you.
-
-📞 Contact
-Project author: Xusanbek0039
-
-📝 License
-(Write the project license here, for example MIT or other)
+It is recommended that a clear and standard `LICENSE` file be added to the root of the project repository to explicitly state the terms under which the software can be used, modified, and distributed.
