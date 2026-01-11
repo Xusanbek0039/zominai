@@ -31,7 +31,7 @@ const LoadingScreen: React.FC = () => {
           Sabrli bo'ling, tizim yuklanmoqda...
         </p>
         <p className="text-sm text-gray-600 dark:text-gray-300 animate-pulse">
-          v.2.0.1
+          v.2.0.2
         </p>
       </div>
     </div>
