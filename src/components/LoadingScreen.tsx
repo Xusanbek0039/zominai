@@ -30,6 +30,9 @@ const LoadingScreen: React.FC = () => {
         <p className="text-sm text-gray-600 dark:text-gray-300 animate-pulse">
           Sabrli bo'ling, tizim yuklanmoqda...
         </p>
+        <p className="text-sm text-gray-600 dark:text-gray-300 animate-pulse">
+          v.2.0.1
+        </p>
       </div>
     </div>
   );
