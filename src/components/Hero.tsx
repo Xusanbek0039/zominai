@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { MessageCircle, Handshake, Sparkles, Brain, Cpu, Sun, Moon, Zap, Code, Database } from 'lucide-react';
 import { Typewriter } from 'react-simple-typewriter';
+
+
+
 const TypingLanguages = () => {
   return (
     <span className="bg-gradient-to-r from-cyan-500 to-blue-500 dark:from-cyan-300 dark:to-blue-300 bg-clip-text text-transparent">
@@ -377,7 +380,7 @@ const Hero = () => {
   className="group relative flex items-center space-x-3 bg-gradient-to-r from-blue-600 via-cyan-600 to-purple-600 hover:from-blue-700 hover:via-cyan-700 hover:to-purple-700 dark:from-blue-500 dark:via-cyan-500 dark:to-purple-500 dark:hover:from-blue-600 dark:hover:via-cyan-600 dark:hover:to-purple-600 text-white px-8 py-4 rounded-full shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 overflow-hidden"
 >
   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-  <MessageCircle className="w-5 h-5 relative z-10" />
+  <MessageCircle className="w-5 h-5 text-white group-hover:text-white transition-colors duration-200 relative z-10" />
   <span className="font-medium relative z-10">Chatbot</span>
 </a>
 
